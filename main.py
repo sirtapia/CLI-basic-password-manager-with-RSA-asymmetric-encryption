@@ -55,7 +55,7 @@ def generateRSAKeyRepair(masterPassword):
     )
     publicKey = privateKey.public_key()
 
-    # save public key
+    #save public key
     pubPem = publicKey.public_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
@@ -63,7 +63,7 @@ def generateRSAKeyRepair(masterPassword):
     with open(PUBLIC_KEY_FILE, "wb") as f:
         f.write(pubPem)
 
-    # save private key encrypted with master password
+    #save private key encrypted with master password
     encPrivatePem = privateKey.private_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PrivateFormat.PKCS8,
@@ -172,7 +172,7 @@ def addPassword():
     password = pwinput.pwinput("Enter your password: ", mask="*")
     #encrypt the password
     cipherb64 = encryptWithPublic(password)
-    # store encrypted passowrd in dict
+    #store encrypted passowrd in dict
     passwordData[web] = {"Username": user, "Password": cipherb64}
     saveData() #saves the website and passwords
     print("password added!")
@@ -233,10 +233,10 @@ def removePassword():
 
     try:
         num = int(input("Enter the number of the website you'd like to remove: "))
-        if 1 <= num <= len(webs):  # check that choice is valid
-            selectedSite = webs[num-1]  # get the actual website name
-            removed = passwordData.pop(selectedSite)  # remove it from dictionary
-            saveData() # saves the deletion 
+        if 1 <= num <= len(webs):  #check that choice is valid
+            selectedSite = webs[num-1]  #get the actual website name
+            removed = passwordData.pop(selectedSite)  #rmove it from dictionary
+            saveData() #saves the deletion 
             print(f"Removed: {selectedSite}")
         else: 
             print("Invalid number.")
@@ -287,15 +287,15 @@ def updatePassword():
                 print("Invalid choice, cancelling update.")
                 return True
 
-            # Encrypt and save
+            #encrypt and save
             encryptedPassword = encryptWithPublic(newPassword)
             passwordData[selectedSite]["Password"] = encryptedPassword
             saveData()
             print("Password successfully updated!")
 
-            # confirmation of decryption right away
+            #confrim the decryption right away
             decryptedPassword = decryptWithPrivate(passwordData[selectedSite]["Password"], masterPassword)
-            print("\n✅ Password successfully updated!")
+            print("\nPassword successfully updated!")
             print(f"Website: {selectedSite}")
             print(f"Username: {passwordData[selectedSite]['Username']}")
             print(f"New Password: {decryptedPassword}")
@@ -351,7 +351,7 @@ def searchPassword():
         return True
 
 def generatePassword(length=None):
-    # if no length is provided, choose a random length between 5 and 25
+    #if no length is provided, choose a random length between 5 and 25
     if length is None: 
         length = random.randint(5, 25)
 
@@ -375,8 +375,8 @@ def generatePassword(length=None):
 
 
         
-if __name__ == "__main__":       
-    loadData()   # loads in all saved passwords
+if __name__ == "__main__":  #GUI  
+    loadData()   #loads in all saved passwords
     while True:
 
         print(""" \n
@@ -444,5 +444,6 @@ Please choose from the options down below
         
 
         
+
 
 
